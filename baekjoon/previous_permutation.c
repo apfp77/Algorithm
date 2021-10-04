@@ -1,13 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-//동적할당 및 입력
-void arr_input(int *arr, int input)
-{
- 
-}
-
 void arr_swap(int *arr, int i, int j)
 {
   int temp;
@@ -16,6 +9,22 @@ void arr_swap(int *arr, int i, int j)
   arr[j] = temp;
 }
 
+int first_arr_check(int *arr, int input)
+{
+  int i = 0;
+  int size = 0;
+  while(i < input)
+  {
+    if (arr[i] == i+1)
+    {
+      size++;
+    }
+    i++;
+  }
+  if (size == input)
+    return (1);
+  return (0);
+}
 
 int main()
 {
@@ -31,7 +40,11 @@ int main()
     scanf("%d", &arr[i]);
     i++;
   }
-
+  if (first_arr_check(arr, input) == 1)
+  {
+    printf("%d",-1);
+    return (0);
+  }
   check = input;
   i = input - 1;
   j = i - 1;
@@ -51,7 +64,6 @@ int main()
       break;
     i--;
   }
-  // i = check + 1;
   while (check <= input - 2)
   {
     i = check + 1;
@@ -72,5 +84,5 @@ int main()
     printf("%d ", arr[i]);
     i++;
   }
-  printf("\n");
+  return (0);
 }
