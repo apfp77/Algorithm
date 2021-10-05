@@ -9,80 +9,50 @@ void arr_swap(int *arr, int i, int j)
   arr[j] = temp;
 }
 
-int first_arr_check(int *arr, int input)
+int main(void)
 {
-  int i = 0;
-  int size = 0;
-  while(i < input)
-  {
-    if (arr[i] == i+1)
-    {
-      size++;
-    }
-    i++;
-  }
-  if (size == input)
-    return (1);
-  return (0);
-}
-
-int main()
-{
-  int input, i, j, check;
+  int i, j, len;
   int *arr;
 
-  scanf("%d", &input);
-  arr = (int *)malloc(sizeof(int) * input);
-
   i = 0;
-  while (i < input)
+  scanf("%d", &len);
+  arr = (int *)malloc(sizeof(int) * len);
+  if (arr == NULL)
+    return (0);
+  j = len - 1;
+  while (i < len)
   {
     scanf("%d", &arr[i]);
     i++;
   }
-  if (first_arr_check(arr, input) == 1)
+  i = len - 1;
+  while (i > 0 && arr[i] > arr[i-1])
+    i--;
+  if (i == 0)
   {
-    printf("%d",-1);
+    printf("%d", -1);
     return (0);
   }
-  check = input;
-  i = input - 1;
-  j = i - 1;
-  while (i >= 1)
+  while (arr[i-1] < arr[j])
+    j--;
+  arr_swap(arr, i - 1, j);
+  while (i < len)
   {
-    while (j >= 0)
-    { 
+    j = i + 1;
+    while (j < len)
+    {
       if (arr[i] < arr[j])
       {
         arr_swap(arr, i, j);
-        check = j + 1;
-        break;
       }
-      j--;
+      j++;
     }
-    if (check != input)
-      break;
-    i--;
-  }
-  while (check <= input - 2)
-  {
-    i = check + 1;
-    while (i <= input -1)
-    {
-      if (arr[check] < arr[i])
-      {
-        arr_swap(arr, check, i);
-      }
-      i++;
-    }
-    check++;
-  }
-  
-  i = 0;
-  while (i < input)
-  {
-    printf("%d ", arr[i]);
     i++;
   }
-  return (0);
+  
+  i = -1;
+  while (++i < len)
+    printf("%d ", arr[i]);
+  free(arr);
+  arr = NULL;
 }
