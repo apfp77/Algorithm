@@ -5,51 +5,30 @@ int m[11];
 int max = -1000000000;
 int min = 1000000000;
 
+int val(int op, int value, int i)
+{
+  if (op == 1)
+    value += m[i + 1];
+  else if (op == 2)
+    value -= m[i + 1];
+  else if (op == 3)
+    value *= m[i + 1];
+  else if (op == 4)
+    value /= m[i + 1];
+  return value;
+}
+
 void calc(int k, int *op, bool check[][4], int n)
 {
-
-  static int b[11];
+  static int b[11]; 
   static int b_i = 0;
-  int value = 0;
-  int v_check = 0;
+  int value = m[0];
   if (k == n - 1)
   {
     for (int i = 0; i < b_i; i++)
-    {
-      if (b[i] == 1)
-      {
-        if (!v_check)
-          value = m[i] + m[i + 1];
-        else
-          value += m[i + 1];
-      }
-      else if (b[i] == 2)
-      {
-        if (!v_check)
-          value = m[i] - m[i + 1];
-        else
-          value -= m[i + 1];
-      }
-      else if (b[i] == 3)
-      {
-        if (!v_check)
-          value = m[i] * m[i + 1];
-        else
-          value *= m[i + 1];
-      }
-      else if (b[i] == 4)
-      {
-        if (!v_check)
-          value = m[i] / m[i + 1];
-        else
-          value /= m[i + 1];
-      }
-      v_check = 1;
-    }
-    if (value > max)
-      max = value;
-    if (value < min)
-      min = value;
+      value = val(b[i], value, i);
+    max = value > max ? value : max;
+    min = value < min ? value : min;
     return;
   }
 
@@ -100,6 +79,5 @@ int main(void)
       for (int j = 0; j < n; j++)
         check[j][i] = 1;
   calc(0, op, check, n);
-  printf("%d\n", max);
-  printf("%d\n", min);
+  printf("%d\n%d", max, min);
 }
