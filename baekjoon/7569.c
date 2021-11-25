@@ -1,17 +1,15 @@
 //토마토 (두번째)
 #include <stdio.h>
 
-// int arr[10000][100][100];
 int arr[10000][100];
-// int q[1000000][3];
-int q[200][3];
+int q[1000000][3];
 
 int main(void) {
 	int m, n, h, q_f, q_r;
     int mn = 0;
 	scanf("%d %d %d", &m, &n, &h);
 	
-	for (int i = 0; i < n * h * m; i++)
+	for (int i = 0; i < n * h * m; i++)     
 		for (int j = 0; j < 2; j++)
 			q[i][j] = 0;
 
@@ -33,16 +31,14 @@ int main(void) {
 
 		}
 	}
-
-    int buf;
     
-    //상하좌우
 	while (q_r != q_f)
 	{
+        int box_area = q[q_f][0] / n;
         //상
-        if (q[q_f][0] - 1 > -1 && arr[q[q_f][0]  - 1][q[q_f][1]] == 0)
+        if (q[q_f][0] - 1 >= n * box_area && arr[q[q_f][0]  - 1][q[q_f][1]] == 0)
         {
-            arr[q[q_f][0] - 1][q[q_f][1]] = 1;
+            arr[q[q_f][0] - 1][q[q_f][1]] = q[q_f][2] + 1;
             q[q_r][0] = q[q_f][0] -1;
 			q[q_r][1] = q[q_f][1];
             q[q_r][2] = q[q_f][2] + 1;
@@ -50,9 +46,9 @@ int main(void) {
         }
 
         //하
-        if (q[q_f][0] + 1 < n && arr[q[q_f][0]  + 1][q[q_f][1]] == 0)
+        if (q[q_f][0] + 1 < n * box_area + n && arr[q[q_f][0]  + 1][q[q_f][1]] == 0)
         {
-            arr[q[q_f][0] + 1][q[q_f][1]] = 1;
+            arr[q[q_f][0] + 1][q[q_f][1]] = q[q_f][2] + 1;
             q[q_r][0] = q[q_f][0] + 1;
 			q[q_r][1] = q[q_f][1];
             q[q_r][2] = q[q_f][2] + 1;
@@ -63,7 +59,7 @@ int main(void) {
         //좌
         if (q[q_f][1] - 1 > -1 && arr[q[q_f][0]][q[q_f][1] - 1] == 0)
         {
-            arr[q[q_f][0]][q[q_f][1] - 1] = 1;
+            arr[q[q_f][0]][q[q_f][1] - 1] = q[q_f][2] + 1;
             q[q_r][0] = q[q_f][0];
 			q[q_r][1] = q[q_f][1] - 1;
             q[q_r][2] = q[q_f][2] + 1;
@@ -73,7 +69,7 @@ int main(void) {
         //우
         if (q[q_f][1] + 1 < m && arr[q[q_f][0]][q[q_f][1] + 1] == 0)
         {
-            arr[q[q_f][0]][q[q_f][1] + 1] = 1;
+            arr[q[q_f][0]][q[q_f][1] + 1] = q[q_f][2] + 1;
             q[q_r][0] = q[q_f][0];
 			q[q_r][1] = q[q_f][1] + 1;
             q[q_r][2] = q[q_f][2] + 1;
@@ -81,9 +77,9 @@ int main(void) {
         }
 
         //아래 박스
-        if (q[q_f][0] + n < n * h && arr[q[q_f][0] + n][q[q_f][1]] == 0)
+        if (n * (box_area + 1) + n <= n * h && q[q_f][0] + n < n * (box_area + 1) + n &&arr[q[q_f][0] + n][q[q_f][1]] == 0)
         {
-            arr[q[q_f][0] + n][q[q_f][1]] = 1;
+            arr[q[q_f][0] + n][q[q_f][1]] = q[q_f][2] + 1;
             q[q_r][0] = q[q_f][0] + n;
 			q[q_r][1] = q[q_f][1];
             q[q_r][2] = q[q_f][2] + 1;
@@ -93,7 +89,7 @@ int main(void) {
         //위 박스
         if (q[q_f][0] - n > -1 && arr[q[q_f][0] - n][q[q_f][1]] == 0)
         {
-            arr[q[q_f][0] - n][q[q_f][1]] = 1;
+            arr[q[q_f][0] - n][q[q_f][1]] = q[q_f][2] + 1;
             q[q_r][0] = q[q_f][0] - n;
 			q[q_r][1] = q[q_f][1];
             q[q_r][2] = q[q_f][2] + 1;
@@ -103,7 +99,7 @@ int main(void) {
         q_f++;
 	}
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n * h; i++)
     {
         for (int j = 0; j < m; j++)
         {
@@ -114,8 +110,6 @@ int main(void) {
             }
         }
     }
-    
-    printf("%d", mn);
-
+    printf("%d\n", mn);
 	return 0;
 }
