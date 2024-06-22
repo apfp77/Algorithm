@@ -2,3 +2,7 @@
 .vscode
 .a.out*
 .idea
+*.out
+*.class
+*.iml
+
