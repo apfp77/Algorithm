@@ -1,7 +1,7 @@
 public class 둘만의_암호 {
     static class Solution {
         public String solution(String s, String skip, int index) {
-            String answer = "";
+            StringBuilder answer = new StringBuilder();
             for (char c: s.toCharArray()) {
                 char tmp = c;
                 int i = 0;
@@ -12,9 +12,9 @@ public class 둘만의_암호 {
                     }
                     i++;
                 }
-                answer += tmp;
+                answer.append(tmp);
             }
-            return answer;
+            return answer.toString();
         }
     }
 
